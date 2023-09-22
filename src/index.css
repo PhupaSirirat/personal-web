@@ -11,11 +11,13 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('/public/font/Inter/Inter.var.woff2') format('truetype');
+  src: url('/public/font/Inter/Inter-Regular.woff') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
-  font-family: Inter;
+  font-family: Jura;
+  color: white;
+  background-color: black;
 }

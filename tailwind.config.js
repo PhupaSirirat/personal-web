@@ -13,8 +13,15 @@ export default {
       secondary: '#301E67',
       tertiary: '#5B8FB9',
       quaternary: '#B6EADA',
+      white: '#FFFFFF',
+      black: '#000000',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        jura: 'Jura',
+        inter: 'Inter',
+      }
+    },
   },
   plugins: [],
 };

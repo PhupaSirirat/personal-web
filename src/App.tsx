@@ -1,24 +1,26 @@
-import { motion } from 'framer-motion';
+import { tv } from 'tailwind-variants';
+import Navigation from '@/components/Navigation';
+
+const Theme = tv({
+  slots: {
+    background: 'h-screen items-center justify-center',
+    container: 'flex',
+  },
+});
+
+const { background } = Theme();
 
 export default function App() {
   return (
     <>
-      <div className="h-screen flex items-center justify-center">
-        <motion.div
-          className="w-40 bg-white rounded-lg p-4"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 2,
-            delay: 0.3,
-            ease: [0, 0.51, 0.2, 1.01],
-          }}
-        >
-          <div className="h-full flex items-center justify-center text-black">
-            <p>Phupa Sirirat</p>
+      <main className={background({ class: 'bg-prinmary' })}>
+          <div className='flex'>
+            <Navigation />
+            <section className='w-1/2 h-screen bg-secondary'>
+              <p>Section 2</p>
+            </section>
           </div>
-        </motion.div>
-      </div>
+      </main>
     </>
   );
 }

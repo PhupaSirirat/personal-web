@@ -15,7 +15,7 @@ const profileSection = tv({
       'mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none',
     NavText:
       'text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary',
-    Link: 'group flex items-center py-3 active',
+    Link: 'group flex items-center py-3 cursor-pointer',
     NavList: 'w-max',
     LinkTree: 'w-32 mt-16 flex gap-4',
   },
@@ -36,15 +36,7 @@ const {
 export default function Navigation() {
   return (
     <section className={Container()}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 1.5,
-          delay: 0.25,
-          ease: [0, 0.31, 0.2, 1.01],
-        }}
-      >
+      <div>
         <div>
           <h1 className={MyName()}>Phupa Sirirat</h1>
           <p className={Text()}>
@@ -56,22 +48,31 @@ export default function Navigation() {
         <nav className={Nav()}>
           <ul className={NavList()}>
             <li>
-              <a href="#" className={Link()}>
+              <motion.a
+                className={Link()}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span className={NavLine()} />
                 <span className={NavText()}>ABOUT ME</span>
-              </a>
+              </motion.a>
             </li>
             <li>
-              <a href="#" className={Link()}>
+              <motion.a
+                className={Link()}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span className={NavLine()} />
                 <span className={NavText()}>EXPERIENCE</span>
-              </a>
+              </motion.a>
             </li>
             <li>
-              <a href="#" className={Link()}>
+              <motion.a
+                className={Link()}
+                whileTap={{ scale: 0.95 }}
+              >
                 <span className={NavLine()} />
                 <span className={NavText()}>PROJECTS</span>
-              </a>
+              </motion.a>
             </li>
           </ul>
           <p></p>
@@ -121,7 +122,7 @@ export default function Navigation() {
             </motion.div>
           </li>
         </ul>
-      </motion.div>
+      </div>
     </section>
   );
 }

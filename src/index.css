@@ -3,15 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Jura';
-  src: url('/public/font/Jura/Jura-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Inter';
-  src: url('/public/font/Inter/Inter-Regular.woff') format('truetype');
+  src: url('/font/Inter/Inter-Regular.woff') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,3 +14,4 @@
   color: white;
   background-color: black;
 }
+

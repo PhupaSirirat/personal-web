@@ -4,6 +4,7 @@ import { tv } from 'tailwind-variants';
 import GitHub from '@/assets/icons/github.svg';
 import IG from '@/assets/icons/ig.svg';
 import LinkedIn from '@/assets/icons/linkedin.svg';
+import { useState } from 'react';
 
 const profileSection = tv({
   slots: {
@@ -46,6 +47,7 @@ export default function Navigation({
   experience,
   projects,
 }: NavigationProps) {
+  const [ref, setRef] = useState(aboutMe);
   const scrollToRef = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
@@ -66,52 +68,63 @@ export default function Navigation({
           <ul className={NavList()}>
             <li>
               <motion.a
-                className={Link()}
+                className={Link({
+                  class: `${ref === aboutMe ? 'active' : ''}`,
+                })}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToRef(aboutMe)}
+                onClick={() => {
+                  scrollToRef(aboutMe);
+                  setRef(aboutMe);
+                }}
               >
                 <span className={NavLine()} />
-                <span className={NavText()}>ABOUT ME</span>
+                <p className={NavText()}>ABOUT ME</p>
               </motion.a>
             </li>
             <li>
               <motion.a
-                className={Link()}
+                className={Link({
+                  class: `${ref === skills ? 'active' : ''}`,
+                })}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToRef(skills)}
+                onClick={() => {
+                  scrollToRef(skills);
+                  setRef(skills);
+                }}
               >
                 <span className={NavLine()} />
-                <span className={NavText()}>SKILLS</span>
+                <p className={NavText()}>SKILLS</p>
               </motion.a>
             </li>
             <li>
               <motion.a
-                className={Link()}
+                className={Link({
+                  class: `${ref === experience ? 'active' : ''}`,
+                })}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToRef(experience)}
+                onClick={() => {
+                  scrollToRef(experience);
+                  setRef(experience);
+                }}
               >
                 <span className={NavLine()} />
-                <span className={NavText()}>EXPERIENCE</span>
+                <p className={NavText()}>EXPERIENCE</p>
               </motion.a>
             </li>
             <li>
               <motion.a
-                className={Link()}
+                className={Link({
+                  class: `${ref === projects ? 'active' : ''}`,
+                })}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToRef(projects)}
+                onClick={() => {
+                  scrollToRef(projects);
+                  setRef(projects);
+                }}
               >
                 <span className={NavLine()} />
-                <span className={NavText()}>PROJECTS</span>
+                <p className={NavText()}>PROJECTS</p>
               </motion.a>
-            </li>
-
-            <li>
-              <a href="#" className={Link()}>
-                <span className="mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none hover:active active" />
-                <span className="text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary">
-                  Hello
-                </span>
-              </a>
             </li>
           </ul>
           <p></p>

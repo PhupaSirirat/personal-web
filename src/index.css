@@ -15,3 +15,13 @@
   background-color: black;
 }
 
+.active {
+  width: fit-content;
+}
+.active span {
+  background-color: #B6EADA;
+  width: 4rem;
+}
+.active p {
+  color: #B6EADA;
+}

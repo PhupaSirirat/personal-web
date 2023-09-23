@@ -12,7 +12,7 @@ const profileSection = tv({
     Text: 'text-xl font-extralight',
     Nav: 'mt-10',
     NavLine:
-      'mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none',
+      'mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none hover:active',
     NavText:
       'text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary',
     Link: 'group flex items-center py-3 cursor-pointer',
@@ -33,7 +33,22 @@ const {
   LinkTree,
 } = profileSection();
 
-export default function Navigation() {
+interface NavigationProps {
+  aboutMe: React.RefObject<HTMLElement>;
+  experience: React.RefObject<HTMLElement>;
+  projects: React.RefObject<HTMLElement>;
+}
+
+export default function Navigation({
+  aboutMe,
+  experience,
+  projects,
+}: NavigationProps) {
+  const scrollToRef = (ref: React.RefObject<HTMLElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <section className={Container()}>
       <div>
@@ -51,6 +66,7 @@ export default function Navigation() {
               <motion.a
                 className={Link()}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToRef(aboutMe)}
               >
                 <span className={NavLine()} />
                 <span className={NavText()}>ABOUT ME</span>
@@ -60,6 +76,7 @@ export default function Navigation() {
               <motion.a
                 className={Link()}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToRef(experience)}
               >
                 <span className={NavLine()} />
                 <span className={NavText()}>EXPERIENCE</span>
@@ -69,10 +86,20 @@ export default function Navigation() {
               <motion.a
                 className={Link()}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToRef(projects)}
               >
                 <span className={NavLine()} />
                 <span className={NavText()}>PROJECTS</span>
               </motion.a>
+            </li>
+
+            <li>
+              <a href="#" className={Link()}>
+                <span className="mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none hover:active active" />
+                <span className="text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary">
+                  Hello
+                </span>
+              </a>
             </li>
           </ul>
           <p></p>

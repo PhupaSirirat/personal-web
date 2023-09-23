@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { tv } from 'tailwind-variants';
 
 const contentSection = tv({
@@ -10,13 +9,15 @@ const contentSection = tv({
   },
 });
 
-const { Container, ContentContainer, TextContent, HyperText } =
-  contentSection();
+const { Container, ContentContainer, TextContent, HyperText } = contentSection();
 
-export default function Content() {
-  const aboutMe = useRef<HTMLElement>(null);
-  const experience = useRef<HTMLElement>(null);
-  const projects = useRef<HTMLElement>(null);
+interface NavigationProps {
+  aboutMe: React.RefObject<HTMLElement>;
+  experience: React.RefObject<HTMLElement>;
+  projects: React.RefObject<HTMLElement>;
+}
+
+export default function Content({ aboutMe, experience, projects }: NavigationProps) {
   return (
     <section className={Container()}>
       <section className={ContentContainer()} ref={aboutMe}>

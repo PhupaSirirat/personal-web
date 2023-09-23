@@ -35,12 +35,14 @@ const {
 
 interface NavigationProps {
   aboutMe: React.RefObject<HTMLElement>;
+  skills: React.RefObject<HTMLElement>;
   experience: React.RefObject<HTMLElement>;
   projects: React.RefObject<HTMLElement>;
 }
 
 export default function Navigation({
   aboutMe,
+  skills,
   experience,
   projects,
 }: NavigationProps) {
@@ -70,6 +72,16 @@ export default function Navigation({
               >
                 <span className={NavLine()} />
                 <span className={NavText()}>ABOUT ME</span>
+              </motion.a>
+            </li>
+            <li>
+              <motion.a
+                className={Link()}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToRef(skills)}
+              >
+                <span className={NavLine()} />
+                <span className={NavText()}>SKILLS</span>
               </motion.a>
             </li>
             <li>

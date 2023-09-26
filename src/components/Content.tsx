@@ -82,19 +82,23 @@ export default function Content({
         <p className={TextContent()}>
           Frontend Developer - Thinc Web Renovate ( Chula ) [ Feb 2023 - current
           ]
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I'm responsible for
-          building and implementing the user interface and user experience of
-          a website or web application. This involves working on both
-          the client-side and the server-side of the web.
+          <br />• Participated in pre-project analysis and technical assessments
+          to validate creation of user-friendly interface.
+          <br />• Contributed to back-end experience and collaborated on APIs.
+          <br />• Develop and maintain user-facing features for web
+          applications.
+          <br />• Collaborate with UX/UI designers to implement designs into
+          interactive, responsive web interfaces.
+          <br />• Laid groundwork of SEO to increase visibility and enable
+          adding fresh pages to site.
+          <br />• Use version control systems (e.g., Git) for code management
+          and collaboration with a team.
         </p>
       </section>
 
       <section className={ContentContainer()} ref={projects}>
         <h1 className={HyperText()}>PROJECTS</h1>
-        <p className={TextContent()}>
-          -
-        </p>
+        <p className={TextContent()}>-</p>
       </section>
     </section>
   );

@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import { tv } from 'tailwind-variants';
 
-import GitHub from '@/assets/icons/github.svg';
-import IG from '@/assets/icons/ig.svg';
-import LinkedIn from '@/assets/icons/linkedin.svg';
-import { useState } from 'react';
+import GitHubIcon from '@/assets/icons/github.svg';
+import IGIcon from '@/assets/icons/ig.svg';
+import LinkedInIcon from '@/assets/icons/linkedin.svg';
+import EmailIcon from '@/assets/icons/email.svg';
+import LocationIcon from '@/assets/icons/location.svg';
+import { useState, useEffect } from 'react';
 
 const profileSection = tv({
   slots: {
@@ -18,7 +20,8 @@ const profileSection = tv({
       'text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary',
     Link: 'group flex items-center py-3 cursor-pointer',
     NavList: 'w-max',
-    LinkTree: 'w-32 mt-16 flex gap-4',
+    Icons: 'w-40 mt-16 flex gap-4',
+    Location: 'flex items-center gap-2 mt-6',
   },
 });
 
@@ -31,7 +34,8 @@ const {
   NavText,
   NavList,
   Link,
-  LinkTree,
+  Icons,
+  Location,
 } = profileSection();
 
 interface NavigationProps {
@@ -53,6 +57,12 @@ export default function Navigation({
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [ref]);
+
   return (
     <section className={Container()}>
       <div>
@@ -130,36 +140,36 @@ export default function Navigation({
           <p></p>
         </nav>
 
-        <ul className={LinkTree()}>
+        <ul className={Icons()}>
           <li>
             <motion.div
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.4 }}
               whileTap={{
                 scale: 0.8,
                 borderRadius: '100%',
               }}
             >
               <a href="https://github.com/PhupaSirirat" target="_blank">
-                <img src={GitHub} alt="GitHub icon" />
+                <img src={GitHubIcon} alt="GitHub icon" />
               </a>
             </motion.div>
           </li>
           <li>
             <motion.div
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.4 }}
               whileTap={{
                 scale: 0.8,
                 borderRadius: '100%',
               }}
             >
               <a href="https://www.instagram.com/okb.p_al.gos/" target="_blank">
-                <img src={IG} alt="IG icon" />
+                <img src={IGIcon} alt="IG icon" />
               </a>
             </motion.div>
           </li>
           <li>
             <motion.div
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.4 }}
               whileTap={{
                 scale: 0.8,
                 borderRadius: '100%',
@@ -169,11 +179,29 @@ export default function Navigation({
                 href="https://www.linkedin.com/in/phupa-sirirat-948381231/"
                 target="_blank"
               >
-                <img src={LinkedIn} alt="LinkedIn icon" />
+                <img src={LinkedInIcon} alt="LinkedIn icon" />
+              </a>
+            </motion.div>
+          </li>
+          <li>
+            <motion.div
+              whileHover={{ scale: 1.4 }}
+              whileTap={{
+                scale: 0.8,
+                borderRadius: '100%',
+              }}
+            >
+              <a href="mailto:phupasirirat@gmail.com" target="_blank">
+                <img src={EmailIcon} alt="Email icon" />
               </a>
             </motion.div>
           </li>
         </ul>
+
+        <div className={Location()}>
+          <img src={LocationIcon} alt="Location icon" className="h-6" />
+          <p>Bangkok, Thailand</p>
+        </div>
       </div>
     </section>
   );

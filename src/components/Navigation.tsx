@@ -13,14 +13,15 @@ const profileSection = tv({
     Container: 'w-1/2 flex flex-col mt-28 items-center text-white fixed',
     MyName: 'text-6xl mb-4 font-bold',
     Text: 'text-xl font-extralight',
-    Nav: 'mt-10',
+    Nav: 'mt-16',
     NavLine:
       'mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none hover:active',
     NavText:
       'text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary',
     Link: 'group flex items-center py-3 cursor-pointer',
     NavList: 'w-max',
-    Icons: 'w-40 mt-16 flex gap-4',
+    Contact: 'w-40 mt-20 flex gap-4',
+    Icon: 'w-5 h-5',
     Location: 'flex items-center gap-2 mt-6',
   },
 });
@@ -34,7 +35,8 @@ const {
   NavText,
   NavList,
   Link,
-  Icons,
+  Contact,
+  Icon,
   Location,
 } = profileSection();
 
@@ -140,7 +142,7 @@ export default function Navigation({
           <p></p>
         </nav>
 
-        <ul className={Icons()}>
+        <ul className={Contact()}>
           <li>
             <motion.div
               whileHover={{ scale: 1.4 }}
@@ -150,7 +152,7 @@ export default function Navigation({
               }}
             >
               <a href="https://github.com/PhupaSirirat" target="_blank">
-                <img src={GitHubIcon} alt="GitHub icon" />
+                <img src={GitHubIcon} alt="GitHub icon" className={Icon()} />
               </a>
             </motion.div>
           </li>
@@ -163,7 +165,7 @@ export default function Navigation({
               }}
             >
               <a href="https://www.instagram.com/okb.p_al.gos/" target="_blank">
-                <img src={IGIcon} alt="IG icon" />
+                <img src={IGIcon} alt="IG icon" className={Icon()} />
               </a>
             </motion.div>
           </li>
@@ -179,7 +181,11 @@ export default function Navigation({
                 href="https://www.linkedin.com/in/phupa-sirirat-948381231/"
                 target="_blank"
               >
-                <img src={LinkedInIcon} alt="LinkedIn icon" />
+                <img
+                  src={LinkedInIcon}
+                  alt="LinkedIn icon"
+                  className={Icon()}
+                />
               </a>
             </motion.div>
           </li>
@@ -192,14 +198,14 @@ export default function Navigation({
               }}
             >
               <a href="mailto:phupasirirat@gmail.com" target="_blank">
-                <img src={EmailIcon} alt="Email icon" />
+                <img src={EmailIcon} alt="Email icon" className="w-5 h-5" />
               </a>
             </motion.div>
           </li>
         </ul>
 
         <div className={Location()}>
-          <img src={LocationIcon} alt="Location icon" className="h-6" />
+          <img src={LocationIcon} alt="Location icon" className={Icon()} />
           <p>Bangkok, Thailand</p>
         </div>
       </div>

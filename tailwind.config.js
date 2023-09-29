@@ -20,7 +20,7 @@ export default {
       fontFamily: {
         jura: 'Jura',
         inter: 'Inter',
-      }
+      },
     },
   },
   plugins: [],

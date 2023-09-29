@@ -23,6 +23,7 @@ const profileSection = tv({
     Contact: 'w-40 mt-20 flex gap-4',
     Icon: 'w-5 h-5',
     Location: 'flex items-center gap-2 mt-6',
+    Credit: 'text-sm mt-16',
   },
 });
 
@@ -38,6 +39,7 @@ const {
   Contact,
   Icon,
   Location,
+  Credit,
 } = profileSection();
 
 interface NavigationProps {
@@ -207,6 +209,11 @@ export default function Navigation({
         <div className={Location()}>
           <img src={LocationIcon} alt="Location icon" className={Icon()} />
           <p>Bangkok, Thailand</p>
+        </div>
+
+        <div className={Credit()}>
+          <p>Inpired by: brittanychiang</p>
+          <p>Developement: React + TypeScript + Vite</p>
         </div>
       </div>
     </section>

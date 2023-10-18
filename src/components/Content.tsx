@@ -1,16 +1,18 @@
+import { useEffect } from 'react';
 import { tv } from 'tailwind-variants';
 import { motion } from 'framer-motion';
 import ProfileImage from '@/assets/me.jpeg';
 
 const contentSection = tv({
   slots: {
-    Container: 'w-full h-min flex flex-col items-end',
-    ContentContainer: 'w-[55vw] min-h-screen px-16 pt-32 text-lg',
+    Container: 'w-full h-min flex flex-col items-center md:items-end',
+    ContentContainer: 'md:w-[55vw] min-h-screen px-8 md:px-16 pt-32 text-lg',
     ContentText: 'mt-4 leading-space',
     ContentHeader: 'text-2xl font-semibold',
     ContentTopic: 'text-3xl font-bold',
     Link: 'text-quaternary underline',
-    MyImage: 'w-48 h-48 mt-16 my-4 object-cover rounded-full',
+    ImageContainer: 'flex justify-center mb-16 md:mb-0',
+    MyImage: 'w-64 h-64 md:w-56 md:h-56 my-4 object-cover rounded-full',
   },
 });
 
@@ -21,6 +23,7 @@ const {
   ContentHeader,
   ContentTopic,
   Link,
+  ImageContainer,
   MyImage,
 } = contentSection();
 
@@ -29,6 +32,8 @@ interface NavigationProps {
   skills: React.RefObject<HTMLElement>;
   experience: React.RefObject<HTMLElement>;
   projects: React.RefObject<HTMLElement>;
+  isNav: boolean;
+  setRef: React.Dispatch<React.SetStateAction<React.RefObject<HTMLElement>>>;
 }
 
 export default function Content({
@@ -36,11 +41,47 @@ export default function Content({
   skills,
   experience,
   projects,
+  isNav,
+  setRef,
 }: NavigationProps) {
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        { ref: aboutMe, name: 'aboutMe' },
+        { ref: skills, name: 'skills' },
+        { ref: experience, name: 'experience' },
+        { ref: projects, name: 'projects' },
+      ];
+
+      // Find the section that is currently in view
+      const currentSection = sections.find(({ ref }) => {
+        if (ref.current && !isNav) {
+          const rect = ref.current.getBoundingClientRect();
+          return (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          );
+        }
+      });
+
+      if (currentSection && !isNav) {
+        setRef(currentSection.ref);
+      }
+    };
+
+    // Attach the event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [aboutMe, skills, experience, projects, isNav, setRef]);
+
   return (
     <section className={Container()}>
       <section className={ContentContainer({ class: 'pt-16' })} ref={aboutMe}>
-        <div className="flex justify-center">
+        <div className={ImageContainer()}>
           <motion.img
             whileHover={{ scale: [null, 1.5, 1.4] }}
             transition={{ duration: 0.3 }}
@@ -88,7 +129,7 @@ export default function Content({
         <p className={ContentText()}>
           <h5 className={ContentHeader()}>Frontend Developer</h5>
           Thinc Web Renovate{' '}
-          <span className=" text-tertiary">( Chula Feb 2023 - current)</span>
+          <span className=" text-tertiary">( Feb 2023 - Oct 2023)</span>
           <ul className="list-disc">
             <li>
               Participated in pre-project analysis and technical assessments to
@@ -122,6 +163,7 @@ export default function Content({
           <h5 className={ContentHeader()}>
             University and Self-taught Projects :)
           </h5>
+          <br />
           Database System Project (CMS) - As a Fullstack Developer{' '}
           <a
             href="https://github.com/PhupaSirirat/DatabaseSystemProject"
@@ -129,6 +171,7 @@ export default function Content({
           >
             <span className={Link()}>Click</span>
           </a>
+          <br />
           <br />
           Web Blogs - As a Fullstack Developer using MERN stack{' '}
           <a
@@ -138,7 +181,8 @@ export default function Content({
             <span className={Link()}>Click</span>
           </a>
           <br />
-          TamSangCRUD - As a Frontend Developer{' '}
+          <br />
+          TamSangCRUD - As a Fullstack Developer{' '}
           <a
             href="https://github.com/PhupaSirirat/tamsang-crud"
             target="_blank"

@@ -6,21 +6,22 @@ import IGIcon from '@/assets/icons/ig.svg';
 import LinkedInIcon from '@/assets/icons/linkedin.svg';
 import EmailIcon from '@/assets/icons/email.svg';
 import LocationIcon from '@/assets/icons/location.svg';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const profileSection = tv({
   slots: {
-    Container: 'w-1/2 flex flex-col mt-28 items-center text-white fixed',
-    MyName: 'text-6xl mb-4 font-bold',
-    Text: 'text-xl font-extralight',
-    Nav: 'mt-16',
+    Container:
+      'w-1/2 flex flex-col mt-28 ml-16 items-center text-white hidden md:block md:fixed',
+    MyName: 'md:text-4xl lg:text-6xl mb-4 font-bold',
+    Text: 'md:text-lg ld:text-xl font-extralight md:w-3/4 lg:w-full',
+    Nav: 'mt-12 lg:mt-16',
     NavLine:
       'mr-4 h-px w-8 bg-white transition-all group-hover:w-16 group-hover:bg-quaternary group-focus-visible:w-16 group-focus-visible:bg-quaternary motion-reduce:transition-none hover:active',
     NavText:
       'text-xs font-bold uppercase tracking-widest group-hover:text-quaternary group-focus-visible:text-quaternary',
     Link: 'group flex items-center py-3 cursor-pointer',
     NavList: 'w-max',
-    Contact: 'w-40 mt-20 flex gap-4',
+    Contact: 'w-40 mt-12 lg:mt-20 flex gap-4',
     Icon: 'w-5 h-5',
     Location: 'flex items-center gap-2 mt-6',
     Credit: 'text-sm mt-16',
@@ -47,6 +48,9 @@ interface NavigationProps {
   skills: React.RefObject<HTMLElement>;
   experience: React.RefObject<HTMLElement>;
   projects: React.RefObject<HTMLElement>;
+  currentRef: React.RefObject<HTMLElement>;
+  setRef: React.Dispatch<React.SetStateAction<React.RefObject<HTMLElement>>>;
+  setNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Navigation({
@@ -54,21 +58,39 @@ export default function Navigation({
   skills,
   experience,
   projects,
+  currentRef,
+  setRef,
+  setNav,
 }: NavigationProps) {
-  const [ref, setRef] = useState(aboutMe);
+  // const [ref, setRef] = useState(aboutMe);
+  const ref = currentRef;
+
   const scrollToRef = (ref: React.RefObject<HTMLElement>) => {
+    setNav(true);
+    setTimeout(() => {
+      setNav(false);
+    }, 650);
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
   useEffect(() => {
+    const handleScroll = () => {
+      // This function will be called after the scroll has finished
+      setNav(false);
+    };
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, [ref]);
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [ref, setNav]);
 
   return (
-    <section className={Container()}>
+    <section className={Container({ class: 'static' })}>
       <div>
         <div>
           <h1 className={MyName()}>Phupa Sirirat</h1>
@@ -200,7 +222,7 @@ export default function Navigation({
               }}
             >
               <a href="mailto:phupasirirat@gmail.com" target="_blank">
-                <img src={EmailIcon} alt="Email icon" className="w-5 h-5" />
+                <img src={EmailIcon} alt="Email icon" className={Icon()} />
               </a>
             </motion.div>
           </li>

@@ -1,177 +1,53 @@
-name: Test Action
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
 on:
-  - push
-  - pull_request
-  - workflow_dispatch
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  test_default_inputs:
-    name: Test with default inputs
-
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        pnpm:
-          - 4.11.1
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Run the action
-        uses: ./
-        with:
-          version: 4.11.1
-
-      - name: 'Test: which'
-        run: which pnpm; which pnpx
-
-      - name: 'Test: install'
-        run: pnpm install
-
-  test_dest:
-    name: Test with dest
-
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        pnpm:
-          - 4.11.1
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run the action
-        uses: ./
-        with:
-          version: 4.11.1
-          dest: ~/test/pnpm
-
-      - name: 'Test: which'
-        run: which pnpm && which pnpx
-
-      - name: 'Test: install'
-        run: pnpm install
-
-  test_standalone:
-    name: Test with standalone
-
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-
-        standalone:
-          - true
-          - false
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run the action
-        uses: ./
-        with:
-          version: 7.0.0
-          standalone: ${{ matrix.standalone }}
-
-      - name: install Node.js
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          # pnpm@7.0.0 is not compatible with Node.js 12
-          node-version: 12.22.12
-
-      - name: 'Test: which (pnpm)'
-        run: which pnpm
-
-      - name: 'Test: which (pnpx)'
-        if: matrix.standalone == false
-        run: which pnpx
-
-      - name: 'Test: install when standalone is true'
-        if: matrix.standalone
+          node-version: 18
+          cache: 'npm'
+      - name: Install PNPM
+        run: npm install -g pnpm
+      - name: Install dependencies
         run: pnpm install
-
-      - name: 'Test: install when standalone is false'
-        if: matrix.standalone == false
-        # Since the default shell on windows runner is pwsh, we specify bash explicitly
-        shell: bash
-        run: |
-          if pnpm install; then
-            echo "pnpm install should fail"
-            exit 1
-          else
-            echo "pnpm install failed as expected"
-          fi
-
-  test_run_install:
-    name: 'Test with run_install (${{ matrix.run_install.name }}, ${{ matrix.os }})'
-
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        pnpm:
-          - 4.11.1
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-        run_install:
-          - name: 'null'
-            value: 'null'
-          - name: 'empty object'
-            value: '{}'
-          - name: 'recursive'
-            value: |
-              recursive: true
-          - name: 'global'
-            value: |
-              args:
-                - --global
-                - --global-dir=./pnpm-global
-                - npm
-                - yarn
-                - pnpm
-          - name: 'array'
-            value: |
-              - {}
-              - recursive: true
-              - args:
-                - --global
-                - --global-dir=./pnpm-global
-                - npm
-                - yarn
-                - pnpm
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run the action
-        uses: ./
+      - name: Build
+        run: pnpm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          version: 4.11.1
-          run_install: ${{ matrix.run_install.value }}
-
-      - name: 'Test: which'
-        run: which pnpm; which pnpx
-
-      - name: 'Test: install'
-        run: pnpm install
+          # Upload dist repository
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
